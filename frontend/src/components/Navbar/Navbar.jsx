@@ -1,73 +1,75 @@
 import React, { useState } from 'react';
-import { Menu, X, LogIn } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const navItems = [
+    { name: 'Home', to: '/' },
+    { name: 'About', to: '/about' },
+    { name: 'Services', to: '/services' },
+    { name: 'Contact', to: '/contact' }
+  ];
 
   return (
-    <nav className="bg-white shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex">
-            {/* Logo */}
-            <div className="flex-shrink-0 flex items-center">
-              <a href="/" className="text-2xl font-bold text-blue-600">
-                Logo
-              </a>
-            </div>
+    <nav className="bg-white shadow-sm">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link to="/" className="text-xl font-bold text-gray-800">Brand</Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              <a href="/" className="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md">Home</a>
-              <a href="/about" className="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md">About</a>
-              <a href="/services" className="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md">Services</a>
-              <a href="/contact" className="text-gray-900 hover:bg-gray-200 px-3 py-2 rounded-md">Contact</a>
-            </div>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex space-x-4 items-center">
+            {navItems.map((item) => (
+              <Link 
+                key={item.name} 
+                to={item.to} 
+                className="text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
+            <Link 
+              to="/login" 
+              className="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700"
+            >
+              Login
+            </Link>
           </div>
 
-          {/* Login Button & Mobile Menu Toggle */}
-          <div className="flex items-center">
-            <div className="hidden sm:flex sm:items-center">
-              <button 
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center"
-              >
-                <LogIn className="mr-2 h-5 w-5" />
-                Login
-              </button>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="-mr-2 flex sm:hidden">
-              <button 
-                onClick={toggleMenu}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
-              >
-                {isOpen ? <X /> : <Menu />}
-              </button>
-            </div>
+          {/* Mobile Menu Toggle */}
+          <div className="md:hidden">
+            <button 
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-gray-600 hover:text-gray-900"
+            >
+              {isOpen ? <X /> : <Menu />}
+            </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="sm:hidden">
-            <div className="pt-2 pb-3 space-y-1">
-              <a href="/" className="text-gray-900 hover:bg-gray-200 block px-3 py-2 rounded-md">Home</a>
-              <a href="/about" className="text-gray-900 hover:bg-gray-200 block px-3 py-2 rounded-md">About</a>
-              <a href="/services" className="text-gray-900 hover:bg-gray-200 block px-3 py-2 rounded-md">Services</a>
-              <a href="/contact" className="text-gray-900 hover:bg-gray-200 block px-3 py-2 rounded-md">Contact</a>
-            </div>
-            <div className="pt-4 pb-3 border-t border-gray-200">
-              <button 
-                className="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center justify-center"
+          <div className="md:hidden absolute left-0 right-0 bg-white shadow-lg z-20">
+            <div className="px-4 pt-2 pb-4 space-y-2">
+              {navItems.map((item) => (
+                <Link 
+                  key={item.name} 
+                  to={item.to} 
+                  className="block text-gray-600 hover:bg-gray-100 px-3 py-2 rounded"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
+              <Link 
+                to="/login" 
+                className="w-full block text-center bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700"
+                onClick={() => setIsOpen(false)}
               >
-                <LogIn className="mr-2 h-5 w-5" />
                 Login
-              </button>
+              </Link>
             </div>
           </div>
         )}
