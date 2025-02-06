@@ -6,7 +6,6 @@ import Test from './components/test';
 import Navbar from './components/Navbar/Navbar';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
-import Dashboard from './components/Dashboard/Dashboard';
 
 function App() {
   return (
@@ -24,7 +23,6 @@ function App() {
           <Route path="/test" element={<Test />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register /> } /> 
-          <Route path='Dashboard' element={<Dashboard />} />
          </Routes>
       </div>
     </Router>
